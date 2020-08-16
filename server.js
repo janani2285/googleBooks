@@ -4,6 +4,7 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 const initDb = require("./config/initDb");
 const apiRoute = require("./routes/apiRoutes");
+require("dotenv").config();
 
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
