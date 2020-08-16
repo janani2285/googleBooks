@@ -18,7 +18,7 @@ function Books() {
       API.getBooks()
       .then((res) => {
         setBooks(res.data ) 
-        console.log(res.data)
+        console.log(res.data.volumeInfo)
       })
       .catch((err) => console.log(err));
     }
