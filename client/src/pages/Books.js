@@ -4,13 +4,15 @@ import DeleteBtn from "../components/DeleteBtn";
 import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
 import { Input, FormBtn } from "../components/Form";
-import API from "../utils/API"
+import Card from "../components/Card";
+import API from "../utils/API";
+import uuid from 'uuid-random';
 function Books() {
   // Initialize books as an empty array
     const [books, setBooks] = useState([]);
-  
+    const [formObject, setFormObject] = useState({})
     useEffect(() => {
-      loadBooks();
+     // loadBooks();
     }, []);
 
     function loadBooks() {
@@ -23,6 +25,26 @@ function Books() {
       .catch((err) => console.log(err));
     }
 
+    function handleInputChange(event) {
+      // add code to control the components here
+      const { name, value } = event.target;
+  
+      // Updating the input's state
+      setFormObject({ ...formObject,
+        [name]: value
+      });
+    //  console.log(formObject)
+    }
+
+    function handleFormSubmit(event) {
+      // add code here to post a new book to the api
+     event.preventDefault();
+     API.getBooks(formObject)
+     .then(()=>   setFormObject({}))
+        .then(()=>   loadBooks())
+        .catch(err => console.log(err));
+    }
+
     return (
       <Container fluid>
         <Row>
@@ -31,8 +53,11 @@ function Books() {
               <h1>Enter the book name to search</h1>
             </Jumbotron>
             <form>
-              <Input name="title" placeholder="Title (required)" />
-              <FormBtn>Search Book</FormBtn>
+              <Input onChange={handleInputChange}
+                name="title"
+                placeholder="Title (required)" />
+              <FormBtn  disabled={!(formObject.title)}
+                onClick={handleFormSubmit}>Search Book</FormBtn>
             </form>
           </Col>
           <Col size="md-6 sm-12">
@@ -42,13 +67,13 @@ function Books() {
             {books.length ? (
               <List>
                 {books.map(book => (
-                  <ListItem key={book._id}>
-                    <a href={"/books/" + book._id}>
-                      <strong>
-                        {book.title} by {book.author}
-                      </strong>
-                    </a>
-                    <DeleteBtn />
+                  <ListItem key={uuid()}>
+                    <Card 
+                     title = {book.title}
+          authors = {book.authors}
+          description = {book.description}
+          thumbnail = {book.thumbnail}
+          infoLink = {book.infoLink}        />
                   </ListItem>
                 ))}
               </List>
