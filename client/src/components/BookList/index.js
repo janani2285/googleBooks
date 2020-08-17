@@ -3,7 +3,7 @@ import Thumbnail from "../Thumbnail";
 import SaveBtn from "../SaveBtn";
 import { Col, Row, Container } from "../Grid";
 
-function SearchResult({ id, title, authors, description, thumbnail, infoLink,onClick }) {
+function BookList({ id, title, authors, description, thumbnail, infoLink,onClick }) {
   return (
     <Container fluid>
       <Row>
@@ -30,4 +30,4 @@ function SearchResult({ id, title, authors, description, thumbnail, infoLink,onC
   );
 }
 
-export default SearchResult;
+export default BookList;

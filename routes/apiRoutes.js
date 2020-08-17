@@ -28,12 +28,33 @@ router.get("/api/books", (req, res) => {
 });
 
 router.post("/api/books", (req, res) => {
-  console.log("Inside post method")
-  console.log(req.body)
   db.Book
   .create(req.body)
   .then(dbModel => res.json(dbModel))
   .catch(err => res.status(422).json(err));
 });
+
+router.get("/api/savedBooks", (req, res) => {
+  db.Book
+  .find({})
+  .then(dbModel => res.json(dbModel))
+  .catch(err => res.status(422).json(err));
+});
+
+
+router.delete("/api/books/:id", (req, res) => {
+  
+  db.Book
+.deleteOne({ id: req.params.id })
+.then(dbModel => {
+ 
+  res.json(dbModel)
+})
+.catch(err => {
+  res.status(422).json(err)
+ // console.log(err)
+});
+});
+
 
 module.exports = router;
