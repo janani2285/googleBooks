@@ -4,7 +4,7 @@ import DeleteBtn from "../components/DeleteBtn";
 import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
 import { Input, FormBtn } from "../components/Form";
-import Card from "../components/Card";
+import SearchResult from "../components/SearchResult";
 import API from "../utils/API";
 import uuid from "uuid-random";
 function Books() {
@@ -20,7 +20,6 @@ function Books() {
     API.getBooks()
       .then((res) => {
         setBooks(res.data);
-        console.log(res.data.volumeInfo);
       })
       .catch((err) => console.log(err));
   }
@@ -70,7 +69,7 @@ function Books() {
               <List>
                 {books.map((book) => (
                   <ListItem key={uuid()}>
-                    <Card
+                    <SearchResult
                       title={book.title}
                       authors={book.authors}
                       description={book.description}
