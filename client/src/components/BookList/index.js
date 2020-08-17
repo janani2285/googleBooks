@@ -1,9 +1,9 @@
 import React from "react";
-import Thumbnail from "../Thumbnail";
 import SaveBtn from "../SaveBtn";
 import { Col, Row, Container } from "../Grid";
+import DeleteBtn from "../DeleteBtn";
 
-function BookList({ id, title, authors, description, thumbnail, infoLink,onClick }) {
+function BookList({ id, title, authors, description, thumbnail, infoLink,onClick, btntype }) {
   return (
     <Container fluid>
       <Row>
@@ -12,7 +12,8 @@ function BookList({ id, title, authors, description, thumbnail, infoLink,onClick
          <h3>{title}</h3>
          </Col>
          <Col size="md-6">
-         <SaveBtn onClick={onClick}/>
+           {btntype==="save"?(<SaveBtn onClick={onClick}/>):(<DeleteBtn onClick={onClick}/>)}
+         
          </Col>
       </Row>
       <h6>Written by {authors}</h6>

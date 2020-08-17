@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from "react";
 import Jumbotron from "../components/Jumbotron";
-import DeleteBtn from "../components/DeleteBtn";
-import { Col, Row, Container } from "../components/Grid";
+import { Col, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
 import { Input, FormBtn } from "../components/Form";
 import BookList from "../components/BookList";
 import API from "../utils/API";
-import uuid from "uuid-random";
 function Books() {
   // Initialize books as an empty array
   const [books, setBooks] = useState([]);
   const [formObject, setFormObject] = useState({});
  // const isSaved = false;
   useEffect(() => {
-     loadBooks();
+    // loadBooks();
   }, []);
 
   function loadBooks() {
@@ -91,6 +89,7 @@ function Books() {
                   thumbnail={book.image}
                   infoLink={book.link}
                   onClick={() => saveBook(book)}
+                  btntype = "save"
                 />
               </ListItem>
             ))}

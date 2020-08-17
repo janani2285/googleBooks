@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Jumbotron from "../components/Jumbotron";
-import DeleteBtn from "../components/DeleteBtn";
-import { Col, Row, Container } from "../components/Grid";
+import { Col, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
-import { Input, FormBtn } from "../components/Form";
 import BookList from "../components/BookList";
 import API from "../utils/API";
 
@@ -58,6 +56,7 @@ function Saved() {
                   thumbnail={book.image}
                   infoLink={book.link}
                   onClick={() => deleteBook(book.id)}
+                  btntype = "delete"
                 />
               </ListItem>
             ))}
