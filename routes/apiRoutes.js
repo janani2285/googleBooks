@@ -9,7 +9,7 @@ router.get("/api/books", (req, res) => {
   axios
     .get(queryString)
     .then(function (books) {
-      console.log(books.data);
+     // console.log(books.data);
       const bookDetails = books.data.items.map((book)=>{
        
         return ({
@@ -17,14 +17,23 @@ router.get("/api/books", (req, res) => {
           "title" : book.volumeInfo.title,
           "authors" : book.volumeInfo.authors,
           "description" : book.volumeInfo.description,
-          "thumbnail" : book.volumeInfo.imageLinks.thumbnail,
-          "infoLink" : book.volumeInfo.infoLink
+          "image" : book.volumeInfo.imageLinks.thumbnail,
+          "link" : book.volumeInfo.infoLink
         })
       })
     
       res.json(bookDetails)
     })
     .catch((err) => res.status(400).send(err));
+});
+
+router.post("/api/books", (req, res) => {
+  console.log("Inside post method")
+  console.log(req.body)
+  db.Book
+  .create(req.body)
+  .then(dbModel => res.json(dbModel))
+  .catch(err => res.status(422).json(err));
 });
 
 module.exports = router;

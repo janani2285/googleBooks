@@ -5,7 +5,6 @@ const BookSchema = new Schema({
   id:{
     type: String,
     required: true,
-    default: new Date(),
     index: {
       unique: true,
     },
@@ -29,7 +28,7 @@ const BookSchema = new Schema({
     required: true,
   },
   link: {
-    type: Date,
+    type: String,
     required: true
   }
 });

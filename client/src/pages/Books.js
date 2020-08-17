@@ -43,9 +43,9 @@ function Books() {
   }
 
 
-  function saveBook(id) {
+  function saveBook(book) {
    
-    API.saveBook(id)
+    API.saveBook(book)
        .then((res)=>   loadBooks())
        .catch(err => console.log(err));
   }
@@ -87,9 +87,9 @@ function Books() {
                       title={book.title}
                       authors={book.authors}
                       description={book.description}
-                      thumbnail={book.thumbnail}
-                      infoLink={book.infoLink}
-                      onClick={() => saveBook(book.id)}
+                      thumbnail={book.image}
+                      infoLink={book.link}
+                      onClick={() => saveBook(book)}
                     />
                   </ListItem>
                 ))}
