@@ -13,6 +13,7 @@ router.get("/api/books", (req, res) => {
       const bookDetails = books.data.items.map((book)=>{
        
         return ({
+          "id" : book.id,
           "title" : book.volumeInfo.title,
           "authors" : book.volumeInfo.authors,
           "description" : book.volumeInfo.description,

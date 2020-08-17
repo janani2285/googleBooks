@@ -42,15 +42,23 @@ function Books() {
       .catch((err) => console.log(err));
   }
 
+
+  function saveBook(id) {
+   
+    API.saveBook(id)
+       .then((res)=>   loadBooks())
+       .catch(err => console.log(err));
+  }
+
   return (
     <Container fluid>
-      
       <Jumbotron>
               <h1>(REACT GOOGLE BOOK SEARCH)</h1>
       </Jumbotron>
       
-    
-        <form>
+      
+    <Col size="m-12">
+      <form>
           <h1>Enter the book name to search</h1>
           <Input
             onChange={handleInputChange}
@@ -61,20 +69,27 @@ function Books() {
             Search Book
           </FormBtn>
         </form>
-    
-        
-            <h1>Search Results</h1>
+    </Col>
+    <Col size="m-12">
+      <br />
+      <br />
+    </Col>
+    <Col size="m-12">
+       <h1>Search Results</h1>
         
             {books.length ? (
               <List>
                 {books.map((book) => (
-                  <ListItem key={uuid()}>
+                 
+                  <ListItem key={book.id}>
                     <SearchResult
+                      id = {book.id}
                       title={book.title}
                       authors={book.authors}
                       description={book.description}
                       thumbnail={book.thumbnail}
                       infoLink={book.infoLink}
+                      onClick={() => saveBook(book.id)}
                     />
                   </ListItem>
                 ))}
@@ -83,6 +98,9 @@ function Books() {
               <h3>No Results to Display</h3>
             )}
          
+    </Col>
+        
+           
       
     </Container>
   );
