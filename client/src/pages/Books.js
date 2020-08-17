@@ -49,7 +49,10 @@ function Books() {
         alert.show('Book Saved Successfully!!!!')
         loadBooks();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        alert.show('This book is already in your saved list')
+        console.log(err)
+      });
   }
 
   const alert = useAlert();
