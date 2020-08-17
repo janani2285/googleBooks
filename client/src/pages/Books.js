@@ -5,6 +5,8 @@ import { List, ListItem } from "../components/List";
 import { Input, FormBtn } from "../components/Form";
 import BookList from "../components/BookList";
 import API from "../utils/API";
+import { useAlert } from 'react-alert'
+
 function Books() {
   // Initialize books as an empty array
   const [books, setBooks] = useState([]);
@@ -44,11 +46,13 @@ function Books() {
   function saveBook(book) {
     API.saveBook(book)
       .then((res) => {
-       // isSaved = true;
+        alert.show('Book Saved Successfully!!!!')
         loadBooks();
       })
       .catch((err) => console.log(err));
   }
+
+  const alert = useAlert();
 
   return (
     <Container fluid>
