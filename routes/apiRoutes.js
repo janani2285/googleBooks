@@ -5,7 +5,7 @@ const axios = require("axios");
 const router = express.Router();
 
 router.get("/api/books", (req, res) => {
-  const queryString = "https://www.googleapis.com/books/v1/volumes?q={title:harry%20potter}&limit=10&key="+process.env.API_KEY;
+  const queryString = "https://www.googleapis.com/books/v1/volumes?&key="+process.env.API_KEY;
   axios
     .get(queryString)
     .then(function (books) {
@@ -22,6 +22,32 @@ router.get("/api/books", (req, res) => {
         })
       })
     
+      res.json(bookDetails)
+    })
+    .catch((err) => res.status(400).send(err));
+});
+
+
+router.get("/api/books/:searchItem", (req, res) => {
+  const searchItem = req.params.searchItem;
+ // console.log(req.params.searchItem[title])
+  const queryString = `https://www.googleapis.com/books/v1/volumes?q={title:${req.params.searchItem}}&key=`+ process.env.API_KEY;
+  axios
+    .get(queryString)
+    .then(function (books) {
+     // console.log(books.data);
+      const bookDetails = books.data.items.map((book)=>{
+      // console.log("book",book)
+        return ({
+          "id" : book.id,
+          "title" : book.volumeInfo.title,
+          "authors" : book.volumeInfo.authors,
+          "description" : book.volumeInfo.description,
+          "image" : book.volumeInfo.imageLinks.thumbnail,
+          "link" : book.volumeInfo.infoLink
+        })
+      })
+     // console.log("bookDetails",bookDetails)
       res.json(bookDetails)
     })
     .catch((err) => res.status(400).send(err));

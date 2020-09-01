@@ -5,25 +5,26 @@ import { List, ListItem } from "../components/List";
 import { Input, FormBtn } from "../components/Form";
 import BookList from "../components/BookList";
 import API from "../utils/API";
-import { useAlert } from 'react-alert'
+import { useAlert } from "react-alert";
+import uuid from 'uuid-random';
 
 function Books() {
   // Initialize books as an empty array
   const [books, setBooks] = useState([]);
   const [formObject, setFormObject] = useState({});
- // const isSaved = false;
+  // const isSaved = false;
   useEffect(() => {
     // loadBooks();
   }, []);
 
-  function loadBooks() {
+/*   function loadBooks() {
     // Add code here to get all books from the database and store them using setBooks
-    API.getBooks()
+    API.getBooksByTitle(formObject.title)
       .then((res) => {
         setBooks(res.data);
       })
       .catch((err) => console.log(err));
-  }
+  } */
 
   function handleInputChange(event) {
     // add code to control the components here
@@ -37,21 +38,28 @@ function Books() {
   function handleFormSubmit(event) {
     // add code here to post a new book to the api
     event.preventDefault();
-    API.getBooks(formObject)
-      .then(() => setFormObject({}))
-      .then(() => loadBooks())
+    setBooks([]);
+   // console.log("formObject", formObject.title);
+    API.getBooksByTitle(formObject.title)
+      .then((res) => {
+        setFormObject({})
+     //   console.log("res.data",res.data)
+       // console.log("books before",books)
+        setBooks(res.data);
+      //  console.log("books after",books)
+      })
       .catch((err) => console.log(err));
   }
 
   function saveBook(book) {
     API.saveBook(book)
       .then((res) => {
-        alert.show('Book Saved Successfully!!!!')
-        loadBooks();
+        alert.show("Book Saved Successfully!!!!");
+        //loadBooks();
       })
       .catch((err) => {
-        alert.show('This book is already in your saved list')
-        console.log(err)
+        alert.show("This book is already in your saved list");
+        console.log(err);
       });
   }
 
@@ -64,7 +72,6 @@ function Books() {
       </Jumbotron>
 
       <Col size="m-12">
-       
         <form>
           <h1>Enter the book name to search</h1>
           <Input
@@ -87,7 +94,7 @@ function Books() {
         {books.length ? (
           <List>
             {books.map((book) => (
-              <ListItem key={book.id}>
+              <ListItem key={book.id + uuid()}>
                 <BookList
                   id={book.id}
                   title={book.title}
@@ -96,7 +103,7 @@ function Books() {
                   thumbnail={book.image}
                   infoLink={book.link}
                   onClick={() => saveBook(book)}
-                  btntype = "save"
+                  btntype="save"
                 />
               </ListItem>
             ))}
